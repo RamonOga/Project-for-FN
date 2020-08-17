@@ -1,0 +1,1 @@
+copy D:\ramon\java_projects\CFNH\ChangeFNHelper\out\artifacts\ChangeFNHelper_jar\ChangeFNHelper.jar D:\ramon\java_projects\CFNH\ChangeFNhelperProg\bin /y

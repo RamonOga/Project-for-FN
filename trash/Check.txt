@@ -1,0 +1,78 @@
+import java.sql.*;
+import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+public class ChangeFNHelper
+{
+
+    public static void main (String[] args)
+    {
+        //JavaJDBC program = new JavaJDBC();
+
+        ChangeFNHelper.open();
+        ChangeFNHelper.useData();
+    }
+
+
+    static Connection co;
+
+
+    static void open()
+    {
+        try
+        {
+            Class.forName("org.sqlite.JDBC");
+            co = DriverManager.getConnection("jdbc:sqlite:clients.db");
+            System.out.println("Connection successful!\n");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static void useData()
+    {
+        try {
+            // создаем формат, в котором будем парсить дату
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            Date nowdate = new Date();
+            Statement statement = co.createStatement();
+            String query =
+                    "SELECT id, name, datefn" +
+                            " FROM clients" +
+                            " ORDER BY id";
+
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next())
+
+            {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String datefn = rs.getString("datefn");
+                long twoweeks;
+                Date date1 = dateFormat.parse(datefn); // присваеваем значеним из колонки datafn в переменную date1.
+                twoweeks = date1.getTime() - nowdate.getTime();
+                if (twoweeks < 1209600000 && twoweeks > 0)
+                {
+                    System.out.println("Client: " + name + " Date of exchange FN: " + date1 +"\n");
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
+
+

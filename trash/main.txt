@@ -1,0 +1,191 @@
+import java.sql.*;
+import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
+public class ChangeFNHelper
+{
+
+    public static void main (String[] args)
+    {
+        //JavaJDBC program = new JavaJDBC();
+
+        System.out.println("===================================================");
+        System.out.println("You are wellcomed by the program FN Change Helper!\n");
+        ChangeFNHelper.open();
+        ChangeFNHelper.mainMenu();
+    }
+
+    static void mainMenu()
+    {
+        System.out.println("Main menu. You will select a menu item.\n");
+        System.out.println("1. Show DataBase.");
+        System.out.println("2. Add a new client.");
+        System.out.println("3. Search of change FN.");
+        System.out.println("4. About program.");
+        System.out.println("5. Exit.\n");
+
+        Scanner scan = new Scanner(System.in);
+        int input = scan.nextInt();
+
+        if(input == 1)
+        {
+            ChangeFNHelper.select();
+        }
+        if(input == 2)
+        {
+            ChangeFNHelper.insert();
+        }
+        if(input == 3)
+        {
+            ChangeFNHelper.useData();
+        }
+        if(input == 4)
+        {
+            String message = "";
+            message += "================================================\n";
+            message += "This shit is written by Markelov Roman in 2020.\n";
+            message += "FN Change Helper Version 0.3a\n";
+            message += "================================================";
+            System.out.println(message);
+        }
+        if(input == 5)
+
+        {
+            System.out.println("Goodbye! I hope my program was useful for you!");
+            ChangeFNHelper.close();
+        }
+        else
+        {
+            ChangeFNHelper.mainMenu();
+        }
+
+    }
+
+    static Connection co;
+
+    static void select()
+    {
+
+        try {
+            Statement statement = co.createStatement();
+            String query =
+                    "SELECT id, name, datefn" +
+                            " FROM clients" +
+                            " ORDER BY id";
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String datefn = rs.getString("datefn");
+                System.out.println(id + "\t||" + name + "\t||" + datefn);
+            }
+            System.out.println("\n");
+            rs.close();
+            statement.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    static void open()
+    {
+        try
+        {
+            Class.forName("org.sqlite.JDBC");
+            co = DriverManager.getConnection("jdbc:sqlite:clients.db");
+            System.out.println("Connection successful!\n");
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    static void insert()
+    {
+        try
+        {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter organization name: ");
+            String name = scanner.nextLine();
+            System.out.println("Enter date of exchange FN: ");
+            String fn = scanner.nextLine();
+
+            String query = "INSERT INTO clients (name, datefn)\n" +
+                    "VALUES ('" + name + "','" + fn +"');";
+
+
+            Statement statement = co.createStatement ();
+            statement.executeUpdate (query);
+
+            System.out.println("\n");
+            System.out.println("Your data are added!\n");
+            statement.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    static void close()
+    {
+        try
+        {
+            co.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
+    static void useData()
+    {
+        try {
+            // создаем формат, в котором будем парсить дату
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            Date nowdate = new Date();
+            Statement statement = co.createStatement();
+            String query =
+                    "SELECT id, name, datefn" +
+                            " FROM clients" +
+                            " ORDER BY id";
+
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next())
+
+            {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String datefn = rs.getString("datefn");
+                long twoweeks;
+                Date date1 = dateFormat.parse(datefn); // присваеваем значеним из колонки datafn в переменную date1.
+                twoweeks = date1.getTime() - nowdate.getTime();
+                if (twoweeks < 1209600000 && twoweeks > 0)
+                {
+                    System.out.println("Client: " + name + " Date of exchange FN: " + date1 +"\n");
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
+
+

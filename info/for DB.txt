@@ -1,0 +1,24 @@
+﻿
+// cоздаем базу
+.open clients.db
+
+// Создаем таблицу в базе
+CREATE TABLE clients (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name VARCHAR(50),
+	datefn VARCHAR(50),
+	phone VARCHAR(50),
+	master VARCHAR(50),
+	info VARCHAR(50));
+	
+// добавляем запись
+INSERT INTO clients (name, datefn)
+VALUES ('123123123','12.12.2012');
+
+
+// Просматриваем таблицу в базе.
+SELECT * FROM clients;
+
+//Удаляем строку в которой значение стобца "id" равен 3 
+DELETE FROM clients
+WHERE id = ‘3’;
