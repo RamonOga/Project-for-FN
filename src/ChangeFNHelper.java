@@ -9,7 +9,7 @@ public class ChangeFNHelper
 
         menu.mainMenu();
 
-       /*//=========== For check.jar =============
+       /*//=========== For check.jar ===========
        WorkWithDB runCheck = new WorkWithDB();
         runCheck.open();
         runCheck.useData();

@@ -2,7 +2,7 @@
 // cоздаем базу
 .open clients.db
 
-// Создаем таблицу в базе
+// Создаем таблицу в базе.
 CREATE TABLE clients (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	name VARCHAR(50),
@@ -11,7 +11,7 @@ CREATE TABLE clients (
 	master VARCHAR(50),
 	info VARCHAR(50));
 	
-// добавляем запись
+// добавляем запись.
 INSERT INTO clients (name, datefn)
 VALUES ('ЕБЛОВ','12.12.12');
 
