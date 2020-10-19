@@ -7,7 +7,6 @@ public class UserInterfice {
         Scanner scanner = new Scanner(System.in,"cp866");
         /*String output = new String("utf-8");*/
         String output = scanner.nextLine();
-        System.out.println(output);
         return output;
     }
 

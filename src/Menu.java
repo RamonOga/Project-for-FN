@@ -39,7 +39,6 @@ public class Menu {
         if (input == 5) {
             System.out.println("Enter a text to search for: ");
             String look = inter.scanStringData();
-            System.out.println("====" + look + "=====");
             run.lookingFor(look);
         }
         if (input == 6) {

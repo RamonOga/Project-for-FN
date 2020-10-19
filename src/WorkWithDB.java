@@ -141,9 +141,7 @@ public class WorkWithDB {
                 String name = rs.getString("name");
                 String datefn = rs.getString("datefn");
 
-
                 System.out.println("Client: " + name + " Date of exchange FN: " + datefn);
-
 
             }
             System.out.println("============ Finish Checking ==============");
